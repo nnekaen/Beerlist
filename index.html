@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+      
+      <script type = "text/javascript" src = "https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+      <script type = "text/javascript" src = " https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
+     
+    <title>myproject</title>
+  </head>
+  <body>
+      <div id="apps">
+          
+          <h1> Make yourself some Punk Beers 🍻</h1>
+    <div v-if="beers.length === 0" class="loading">Loading...</div>       
+     <div v-for="beer in beers" class="beer-contain">
+         
+
+        
+        
+        
+        
+          
+
+     <div class="beer-img">
+        <img :src="beer.img" height="350" />
+      </div>
+     
+      <div class="beer-info">
+        <h2>{{ beer.name }}</h2>
+        <p class="bright">{{ beer.tagline }}</p>
+        <p><span class="bright">Description:</span> {{ beer.desc }}</p>
+        <p><span class="bright">Tips:</span> {{ beer.tips }}</p>
+        <h3 class="bright">Food Pairings</h3>
+        <ul>
+          <li v-for="item in beer.food">
+            {{ item }}
+          </li>
+        </ul>
+      </div>
+    </div>
+      
+      
+     
+          
+          
+          
+          
+          <script type = "text/javascript">
+        var vm = new Vue({
+  el: '#apps',
+  data() {
+    return {
+      bottom: false,
+      beers: []
+    }
+  },
+  watch: {
+    bottom(bottom) {
+      if (bottom) {
+        this.addBeer()
+      }
+    }
+  },
+  created() {
+    window.addEventListener('scroll', () => {
+      this.bottom = this.bottomVisible()
+    })
+    this.addBeer()
+  },
+  methods: {
+    bottomVisible() {
+      const scrollY = window.scrollY
+      const visible = document.documentElement.clientHeight
+      const pageHeight = document.documentElement.scrollHeight
+      const bottomOfPage = visible + scrollY >= pageHeight
+      return bottomOfPage || pageHeight < visible
+    },
+    addBeer() {
+      axios.get('https://api.punkapi.com/v2/beers?malt=Extra Pale')
+        .then(response => {
+          let api = response.data[0];
+          let apiInfo = {
+            name : api.name,
+            desc : api.description,
+            img : api.image_url,
+            tips : api.brewers_tips,
+            tagline : api.tagline,
+            food : api.food_pairing
+          };
+          this.beers.push(apiInfo)
+          if (this.bottomVisible()) {
+            this.addBeer()
+          }
+      })
+    }
+  }
+})
+      </script>
+  </body>
+</html>
