@@ -1,6 +1,10 @@
 <template>
-  <v-container>
-  </v-container>
+  <v-data-table
+    :headers="headers"
+    :items="result"
+    :items-per-page="5"
+    class="elevation-1"
+  ></v-data-table>
 </template>
 
 <script>
@@ -8,7 +12,17 @@
     name: 'BeerList',
 
     data: () => ({
-      result: null
+      result: null,
+      headers: [
+          {
+            text: 'Name',
+            align: 'start',
+            sortable: true,
+            value: 'name',
+          },
+          { text: 'Tagline', value: 'tagline' },
+          
+        ],
     }),
 
     beforeMount() {
