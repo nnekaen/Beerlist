@@ -1,10 +1,13 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="result"
-    :items-per-page="5"
-    class="elevation-1"
-  ></v-data-table>
+  <v-container>
+    <v-data-table
+      v-if="result"
+      :headers="headers"
+      :items="result"
+      :items-per-page="5"
+      class="elevation-1"
+    ></v-data-table>
+  </v-container>
 </template>
 
 <script>
