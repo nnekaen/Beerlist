@@ -1,7 +1,6 @@
 <template>
   <v-container>
     <v-data-table
-      v-if="result"
       :headers="headers"
       :items="result"
       :items-per-page="5"
@@ -15,7 +14,7 @@
     name: 'BeerList',
 
     data: () => ({
-      result: null,
+      result: [],
       headers: [
           {
             text: 'Name',
